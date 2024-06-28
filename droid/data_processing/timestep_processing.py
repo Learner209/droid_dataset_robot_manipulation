@@ -82,7 +82,7 @@ class TimestepProcesser:
             full_cam_ids = sorted(cam_intrinsics_obs.keys())
             for full_cam_id in full_cam_ids:
                 if serial_number in full_cam_id:
-                    intr = cam_intrinsics_obs[full_cam_id]
+                    intr = cam_intrinsics_obs[full_cam_id]["cameraMatrix"]
                     intrinsics_dict[cam_type].append(intr)
 
         sorted_intrinsics_keys = sorted(intrinsics_dict.keys())
@@ -107,7 +107,7 @@ class TimestepProcesser:
 
         ### Finish Observation Portion ###
         low_level_state = np.concatenate([robot_state, extrinsics_state, intrinsics_state], dtype=self.state_dtype)
-        processed_timestep = {"observation": {"state": low_level_state, "camera": high_dim_state_dict}}
+        processed_timestep = {"observation": {"state": low_level_state, "camera": high_dim_state_dict, "robot_state": robot_state}}
         self.image_transformer.forward(processed_timestep)
 
         ### Add Proper Action ###

@@ -107,7 +107,7 @@ class TimestepProcesser:
 
         ### Finish Observation Portion ###
         low_level_state = np.concatenate([robot_state, extrinsics_state, intrinsics_state], dtype=self.state_dtype)
-        processed_timestep = {"observation": {"state": low_level_state, "camera": high_dim_state_dict, "robot_state": robot_state}}
+        processed_timestep = {"observation": {"state": low_level_state, "camera": high_dim_state_dict, "robot_state": full_robot_state}}
         self.image_transformer.forward(processed_timestep)
 
         ### Add Proper Action ###
